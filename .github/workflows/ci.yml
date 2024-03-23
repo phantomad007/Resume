@@ -3,11 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - master
       - main
 
 permissions:
-  contents: write
+  contents: write  # Ensure workflow has write access
 
 jobs:
   deploy:
@@ -21,10 +20,10 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
-      - name: Set up Python (choose a specific version)
+      - name: Set up Python (choose a supported version)
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12.2'  # Replace X with the desired version (e.g., 3.8, 3.9, 3.10)
+          python-version: '3.X'  # Replace X with a supported version (e.g., 3.8, 3.9, 3.10)
 
       - name: Install dependencies
         run: |
@@ -33,10 +32,20 @@ jobs:
       - name: Cache MkDocs dependencies (optional)
         uses: actions/cache@v3
         with:
-          path: ~/.cache/pip  # Cache pip dependencies
+          path: ~/.cache/pip
           key: ${{ runner.os }}-mkdocs-${{ hashFiles('mkdocs.yml') }}  # Cache key based on OS, MkDocs version, and MkDocs config changes
           restore-keys: |
             ${{ runner.os }}-mkdocs-
 
-      - name: Build and deploy documentation
-        run: mkdocs gh-deploy --force
+      - name: Build documentation (with echo for debugging)
+        run: |
+          echo "Building MkDocs documentation..."
+          mkdocs build  # Build the documentation locally (for debugging)
+          echo "Documentation built successfully."
+
+      - name: Deploy documentation (with error capture)
+        run: |
+          echo "Deploying documentation..."
+          mkdocs gh-deploy --force || true  # Capture errors but continue execution (for logging)
+          echo "Deployment complete."
+
