@@ -11,7 +11,8 @@ permissions:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Or adjust runner OS if needed
+
     steps:
       - uses: actions/checkout@v3
 
@@ -20,9 +21,10 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
-      - uses: actions/setup-python@v4
+      - name: Set up Python (choose a specific version)
+        uses: actions/setup-python@v4
         with:
-          python-version: 'latest'  # Use the latest available Python version
+          python-version: '3.12.2'  # Replace X with the desired version (e.g., 3.8, 3.9, 3.10)
 
       - name: Install dependencies
         run: |
