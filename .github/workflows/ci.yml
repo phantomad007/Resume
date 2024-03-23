@@ -1,8 +1,7 @@
-name: ci 
+name: ci
 on:
   push:
     branches:
-      - master 
       - main
 permissions:
   contents: write
@@ -19,6 +18,5 @@ jobs:
           key: ${{ github.ref }}
           path: .cache
       - run: pip install mkdocs-material
-      
-      - run: pip install mkdocs-material-extensions
+      - run: pip install pillow cairosvg
       - run: mkdocs gh-deploy --force
