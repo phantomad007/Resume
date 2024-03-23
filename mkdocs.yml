@@ -1,0 +1,69 @@
+site_name: A little about me!
+site_url:
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  language: en
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7  # Sun icon for light theme
+        name: Switch to dark mode
+      primary: '#4c51bf'  # Purple primary color
+      accent: '#ff7e67'   # Coral accent color
+    - scheme: slate
+      toggle:
+        icon: material/brightness-1  # Moon icon for dark theme
+        name: Switch to light mode
+      primary: '#2196f3'  # Blue primary color
+      accent: '#4caf50'   # Green accent color
+
+nav:
+  - Home: home.md
+  - About: about.md  
+  - Experience: experience.md
+  - Contact: contact.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/phantomad007/
+    - icon: fontawesome/brands/instagram
+      link: https://instagram.com/pranay__sai/
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/pranay-sai-j/
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.mark
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.mark
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+copyright: |
+  &copy; 2024 <a href="https://github.com/phantomad007"  target="_blank" rel="noopener">Pranay Sai Jangeti</a>
+
+plugins:
+  - glightbox
+extra_css:
+  - stylesheets/extra.css
