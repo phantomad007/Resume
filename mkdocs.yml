@@ -33,15 +33,6 @@ nav:
   - Experience: experience.md
   - Contact: contact.md
 
-extra:
-  social:
-    - icon: fontawesome/brands/github-alt
-      link: https://github.com/phantomad007/
-    - icon: fontawesome/brands/instagram
-      link: https://instagram.com/pranay__sai/
-    - icon: fontawesome/brands/linkedin
-      link: https://www.linkedin.com/in/pranay-sai-j/
-
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
@@ -59,6 +50,17 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
+
+
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/phantomad007/
+    - icon: fontawesome/brands/instagram
+      link: https://instagram.com/pranay__sai/
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/pranay-sai-j/
+
 
 copyright: |
   &copy; 2024 <a href="https://github.com/phantomad007"  target="_blank" rel="noopener">Pranay Sai Jangeti</a>
