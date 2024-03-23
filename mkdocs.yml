@@ -1,5 +1,6 @@
 site_name: A little about me!
-site_url: https://github.com/phantomad007/Resume
+site_url: https://github.com/phantomad007/Resume/
+
 theme:
   name: material
   features:
