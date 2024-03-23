@@ -1,29 +1,40 @@
-name: ci 
+name: CI
+
 on:
   push:
     branches:
-      - master 
+      - master
       - main
+
 permissions:
   contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Configure Git Credentials
         run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
       - uses: actions/setup-python@v3
         with:
-          python-version: 3.8
-      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
-      - uses: actions/cache@v4
+          python-version: 'latest'  # Use the latest available Python version
+
+      - name: Install dependencies
+        run: |
+          python -m pip install mkdocs mkdocs-material  # Install both MkDocs and Material theme
+
+      - name: Cache MkDocs dependencies (optional)
+        uses: actions/cache@v3
         with:
-          key: mkdocs-material-${{ env.cache_id }}
-          path: .cache
+          path: ~/.cache/pip  # Cache pip dependencies
+          key: ${{ runner.os }}-mkdocs-${{ hashFiles('mkdocs.yml') }}  # Cache key based on OS, MkDocs version, and MkDocs config changes
           restore-keys: |
-            mkdocs-material-
-      - run: pip install mkdocs-material 
-      - run: mkdocs gh-deploy --force
+            ${{ runner.os }}-mkdocs-
+
+      - name: Build and deploy documentation
+        run: mkdocs gh-deploy --force
