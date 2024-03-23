@@ -27,11 +27,6 @@ theme:
       primary: '#2196f3'  # Blue primary color
       accent: '#4caf50'   # Green accent color
 
-nav:
-  - Home: home.md
-  - About: about.md  
-  - Experience: experience.md
-  - Contact: contact.md
 
 markdown_extensions:
   - pymdownx.highlight:
