@@ -1,51 +1,67 @@
-name: CI
+name: ci
 
-on:
-  push:
-    branches:
-      - main
-
-permissions:
-  contents: write  # Ensure workflow has write access
+on: [push, pull_request]
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest  # Or adjust runner OS if needed
 
+  build:
+    name: Build docs
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Configure Git Credentials
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-
-      - name: Set up Python (choose a supported version)
-        uses: actions/setup-python@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.2
         with:
-          python-version: '3.X'  # Replace X with a supported version (e.g., 3.8, 3.9, 3.10)
-
-      - name: Install dependencies
-        run: |
-          python -m pip install mkdocs mkdocs-material  # Install both MkDocs and Material theme
-
-      - name: Cache MkDocs dependencies (optional)
-        uses: actions/cache@v3
+          fetch-depth: 0
+          sparse-checkout: |
+            docs
+      - name: Setup python
+        uses: actions/setup-python@v5.0.0
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-mkdocs-${{ hashFiles('mkdocs.yml') }}  # Cache key based on OS, MkDocs version, and MkDocs config changes
+          python-version: 3.x
+      - name: Get pip cache directory
+        id: pip-cache
+        run: |
+          echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
+      - name: Cache dependencies
+        uses: actions/cache@v4.0.1
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
-            ${{ runner.os }}-mkdocs-
+            ${{ runner.os }}-pip-
+      - name: Install dependencies
+        run: pip install -r docs/requirements.txt
+      - name: Build documentation
+        run: mkdocs build
 
-      - name: Build documentation (with echo for debugging)
+  deploy:
+    if: github.event_name == 'push' && contains(fromJson('["refs/heads/master", "refs/heads/main"]'), github.ref)
+    needs: build
+    name: Deploy docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.2
+        with:
+          fetch-depth: 0
+          sparse-checkout: |
+            docs
+      - name: Setup python
+        uses: actions/setup-python@v5.0.0
+        with:
+          python-version: 3.x
+      - name: Get pip cache directory
+        id: pip-cache
         run: |
-          echo "Building MkDocs documentation..."
-          mkdocs build  # Build the documentation locally (for debugging)
-          echo "Documentation built successfully."
-
-      - name: Deploy documentation (with error capture)
-        run: |
-          echo "Deploying documentation..."
-          mkdocs gh-deploy --force || true  # Capture errors but continue execution (for logging)
-          echo "Deployment complete."
-
+          echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
+      - name: Cache dependencies
+        uses: actions/cache@v4.0.1
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install dependencies
+        run: pip install -r docs/requirements.txt
+      - name: Deploy to GitHub Pages
+        run: mkdocs gh-deploy --force
