@@ -1,4 +1,5 @@
 site_name: A little about me!
+repo_url: https://github.com/phantomad007/Resume/
 theme:
   name: material
   features:
