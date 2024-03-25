@@ -27,7 +27,8 @@ theme:
         name: Switch to light mode
       primary: "#2196f3" # Blue primary color
       accent: "#4caf50" # Green accent color
-
+extra_css:
+  - stylesheets/extra.css
 nav:
   - Home: home.md
   - About: about.md
@@ -63,6 +64,3 @@ extra:
 
 copyright: |
   &copy; 2024 <a href="https://github.com/phantomad007"  target="_blank" rel="noopener">Pranay Sai Jangeti</a>
-
-extra_css:
-  - stylesheets/extra.css
