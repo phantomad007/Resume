@@ -33,6 +33,5 @@ jobs:
       - run: mkdocs gh-deploy --force
 env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - run: pip install mkdocs
       - run: pip install mkdocs-material
       - run: mkdocs gh-deploy --force
