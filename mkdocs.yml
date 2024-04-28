@@ -32,7 +32,7 @@ extra_css:
 
 nav:
   - Home:
-    - home.md
+      - 'Home': home.md
   - About Me: 
     - about.md
   - Contact: 
