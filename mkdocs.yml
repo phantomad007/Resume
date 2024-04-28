@@ -31,12 +31,14 @@ extra_css:
   - stylesheets/extra.css
 
 nav:
-  - Section:
-    - section/home.md
-    - Page 1: section/about.md
-    - Page 2: section/contact.md
-    - Page 3: section/experience.md
-    - Page 4: section/contact.md
+  - Home:
+    - home.md
+  - About Me: 
+    - about.md
+  - Contact: 
+    - contact.md
+  - Experience: 
+    - experience.md
 
 markdown_extensions:
   - pymdownx.highlight:
