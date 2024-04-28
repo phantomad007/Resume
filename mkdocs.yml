@@ -1,5 +1,5 @@
 site_name: A little about me!
-repo_url: https://github.com/phantomad007/Resume/
+repo_url: https://github.com/phantomad007/Resume/home
 theme:
   name: material
   features:
@@ -31,14 +31,10 @@ extra_css:
   - stylesheets/extra.css
 
 nav:
-  - Home:
-      - 'Home': home.md
-  - About Me: 
-    - about.md
-  - Contact: 
-    - contact.md
-  - Experience: 
-    - experience.md
+  - Home: home.md
+  - About me: about.md
+  - Contact: contact.md
+  - Experience: experience.md
 
 markdown_extensions:
   - pymdownx.highlight:
